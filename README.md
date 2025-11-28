@@ -131,16 +131,6 @@ graph TD
     E --> F[Оформление заказа]
     F --> G[Завершение покупки]
     
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#e8f5e8
-    style E fill:#fce4ec
-    style F fill:#f3e5f5
-    style G fill:#1b5e20,color:#ffffff
-    
-    classDef default fill:#f5f5f5,stroke:#333,stroke-width:2px
-```
 ````
 
 #### **3.2. Frontend архитектура**
