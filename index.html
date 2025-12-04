@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER KOMBAT | Игровые компьютеры</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* SCSS переменные */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-red: #ff003c;
+            --neon-yellow: #ffde00;
+            --neon-purple: #b967ff;
+            --dark-bg: #0a0a14;
+            --darker-bg: #050509;
+            --light-bg: #f5f5f7;
+            --lighter-bg: #ffffff;
+            --light-text: #333333;
+            --light-border: #e0e0e0;
+            --cyber-gradient: linear-gradient(135deg, #00f3ff 0%, #b967ff 50%, #ff003c 100%);
+            
+            /* переменные для темной темы */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--darker-bg);
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --border-color: rgba(0, 243, 255, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* белая тема */
+        .light-theme {
+            --bg-primary: var(--light-bg);
+            --bg-secondary: var(--lighter-bg);
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-bg: rgba(0, 0, 0, 0.03);
+        }
+
+        /* база стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-family: 'Rajdhani', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* это для текста стиили */
+        .cyber-text {
+            color: var(--neon-blue);
+        }
+
+        .mk-text {
+            color: var(--neon-red);
+        }
+
+        /* смена темы */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--card-bg);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-switcher i {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+        }
+
+        /* шапка */
+        header {
+            padding: 15px 0;
+            background: var(--bg-secondary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-red);
+        }
+
+        /* раздел систем (херо) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.8;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* секция продуктов (товаров) */
+        .products {
+            padding: 120px 0;
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* грид для продукьлв */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .cyber-card {
+            border: 2px solid var(--neon-blue);
+        }
+
+        .mk-card {
+            border: 2px solid var(--neon-red);
+        }
+
+        .product-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .cyber-card h3 {
+            color: var(--neon-blue);
+        }
+
+        .mk-card h3 {
+            color: var(--neon-red);
+        }
+
+        .specs {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .specs li {
+            list-style: none;
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .specs li::before {
+            content: '▸';
+            color: var(--neon-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .mk-card .specs li::before {
+            color: var(--neon-red);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 2rem 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .cyber-card .price {
+            color: var(--neon-blue);
+        }
+
+        .mk-card .price {
+            color: var(--neon-red);
+        }
+
+        /* кнопки */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--neon-blue);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-red);
+            border: 2px solid var(--neon-red);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-red);
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* видео */
+        .video-section {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .video-wrapper {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .light-theme .video-placeholder {
+            background: linear-gradient(45deg, #e0e0e0, #c0c0c0);
+        }
+
+        .play-icon {
+            font-size: 4rem;
+            color: var(--neon-blue);
+        }
+
+        /* фотки */
+        .gallery {
+            padding: 120px 0;
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease;
+        }
+
+        /* грид для фоток */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .light-theme .gallery-overlay {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* песенки */
+        .audio-section {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .audio-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .audio-player {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--neon-purple);
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-player h3 {
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* подвал */
+        footer {
+            background: var(--bg-secondary);
+            padding: 4rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 3rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* flexbox для ссылок */
+        .social-links {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--neon-blue);
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-red);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .fatality-text {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-red);
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+
+
+            }
+
+
+.nav-links a.active {
+    color: var(--neon-red) !important;
+    border-bottom: 2px solid var(--neon-red);
+    padding-bottom: 5px;
+}
+
+/* Для кибер-эффекта активной ссылки */
+.nav-links a.active::after {
+    content: ' ▸';
+    color: var(--neon-red);
+}
+
+.nav-links a.active::before {
+    content: '◂ ';
+    color: var(--neon-red);
+}
+
+
+
+
+
+
+
+
+
+
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- переключатель темы -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- шапка -->
+    <!-- Шапка -->
+<header>
+    <nav class="container">
+        <h1 class="logo cyber-text">CyberKombat</h1>
+        <ul class="nav-links">
+            <!-- Добавьте эти ссылки -->
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <!-- Существующие ссылки -->
+            <li><a href="#products">Системы</a></li>
+            <li><a href="#video">Видео</a></li>
+            <li><a href="#gallery">Галерея</a></li>
+            <li><a href="#audio">Аудио</a></li>
+        </ul>
+    </nav>
+</header>
+    <!-- раздел систем -->
+    <section id="home" class="hero">
+        <article class="hero-content">
+            <h1 class="hero-title cyber-text">CyberKombat</h1>
+            <p class="hero-subtitle">Эпичные игровые системы для чемпионов киберспорта. Побеждай с стилем!</p>
+            <button class="btn btn-primary" onclick="scrollToProducts()">ВЫБРАТЬ СИСТЕМУ</button>
+        </article>
+    </section>
+
+    <!--  продуктоы -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title cyber-text">Игровые Системы</h2>
+            <div class="product-grid">
+                <article class="product-card cyber-card">
+                    <h3>Cyber Ninja</h3>
+                    <ul class="specs">
+                        <li>RTX 4090 24GB GDDR6X</li>
+                        <li>Intel Core i9-14900K</li>
+                        <li>64GB DDR5 RAM 6400MHz</li>
+                        <li>2TB NVMe SSD Gen5</li>
+                        <li>Custom Liquid Cooling</li>
+                        <li>1200W 80+ Platinum PSU</li>
+                    </ul>
+                    <p class="price">₽329 999</p>
+                    <button class="btn btn-primary" onclick="buyProduct()">ЗАКАЗАТЬ</button>
+                </article>
+
+                <article class="product-card mk-card">
+                    <h3>Fatality Edition</h3>
+                    <ul class="specs">
+                        <li>RTX 4080 SUPER 16GB</li>
+                        <li>AMD Ryzen 9 7950X3D</li>
+                        <li>32GB DDR5 RAM 6000MHz</li>
+                        <li>4TB NVMe SSD RAID 0</li>
+                        <li>360mm AIO Cooler</li>
+                        <li>1000W 80+ Gold PSU</li>
+                    </ul>
+                    <p class="price">₽279 999</p>
+                    <button class="btn btn-secondary" onclick="buyProduct()">FATALITY!</button>
+                </article>
+
+                <article class="product-card cyber-card">
+                    <h3>Cyber Scorpion</h3>
+                    <ul class="specs">
+                        <li>RTX 4070 Ti SUPER 16GB</li>
+                        <li>Intel Core i7-14700K</li>
+                        <li>32GB DDR5 RAM 5600MHz</li>
+                        <li>2TB NVMe SSD Gen4</li>
+                        <li>280mm Liquid Cooling</li>
+                        <li>850W 80+ Gold PSU</li>
+                    </ul>
+                    <p class="price">₽199 999</p>
+                    <button class="btn btn-primary" onclick="buyProduct()">ЗАКАЗАТЬ</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- видео(я тут чутка не доделала) -->
+    <section id="video" class="video-section">
+        <div class="container">
+            <h2 class="section-title cyber-text">Технологии Будущего</h2>
+            <div class="video-container">
+                <figure class="video-wrapper">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play play-icon"></i>
+                    </div>
+                    <figcaption class="video-caption">
+                        <h3>CyberKombat в действии</h3>
+                        <p>Эксклюзивный обзор наших флагманских систем</p>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- фотки -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title cyber-text">Галерея Сборок</h2>
+            <div class="gallery-grid">
+                <figure class="gallery-item">
+                    <img src="/img/audio/i.webp" alt="Игровая сборка с RGB подсветкой">
+                    <figcaption class="gallery-overlay">
+                        <h4>Neon Genesis</h4>
+                        <p>Фирменная RGB подсветка</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="/img/audio/i (3).webp" alt="Мощный игровой компьютер">
+                    <figcaption class="gallery-overlay">
+                        <h4>Cyber Beast</h4>
+                        <p>Максимальная производительность</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="/img/audio/i (2).webp" alt="Кастомная система охлаждения">
+                    <figcaption class="gallery-overlay">
+                        <h4>Liquid Cooled</h4>
+                        <p>Кастомная система охлаждения</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="/img/audio/i (1).webp" alt="Компактная игровая сборка">
+                    <figcaption class="gallery-overlay">
+                        <h4>Mini Tower</h4>
+                        <p>Компактная мощная система</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="/img/audio/diploma.webp" alt="Игровая установка">
+                    <figcaption class="gallery-overlay">
+                        <h4>Battle Station</h4>
+                        <p>Полная игровая установка</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="/img/audio/2facf9c9e5f10a9061ac12472d192d8c.png" alt="Геймерское кресло и ПК">
+                    <figcaption class="gallery-overlay">
+                        <h4>Pro Gamer Setup</h4>
+                        <p>Профессиональная конфигурация</p>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- для песенок -->
+    <section id="audio" class="audio-section">
+        <div class="container">
+            <h2 class="section-title cyber-text">Киберзвук</h2>
+            <div class="audio-container">
+                <article class="audio-player">
+                    <h3>Cyber Synth</h3>
+                    <p>Фирменный киберпанк саундтрек</p>
+                    <audio controls>
+                        <source src="/img/audio/mk music.mp3" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио элемент.
+                    </audio>
+                </article>
+                <article class="audio-player">
+                    <h3>Battle Theme</h3>
+                    <p>Эпичная боевая музыка</p>
+                    <audio controls>
+                        <source src="/img/audio/OST_-_Mortal_Kombat_Original_62828923.mp3" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио элемент.
+                    </audio>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h2 class="footer-logo cyber-text">CyberKombat</h2>
+            <p>Лучшие игровые системы для настоящих чемпионов</p>
+            
+            <nav class="social-links">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </nav>
+            
+            <p class="copyright">© 2024 CYBERKOMBAT. Все права защищены.</p>
+            <p class="fatality-text">FINISH HIM!</p>
+        </div>
+    </footer>
+
+    <script>
+        // это для смены темы на светлую
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const body = document.body;
+        
+        themeSwitcher.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            
+            //  иконка переключателя
+            const icon = themeSwitcher.querySelector('i');
+            if (body.classList.contains('light-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function buyProduct() {
+            alert('Спасибо за заказ! Наш менеджер свяжется с вами для уточнения деталей сборки.');
+        }
+
+        // анимка при прокрутке
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.product-card, .gallery-item, .audio-player').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас | CYBER KOMBAT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Используем ваши существующие стили с небольшими дополнениями */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-red: #ff003c;
+            --neon-yellow: #ffde00;
+            --neon-purple: #b967ff;
+            --dark-bg: #0a0a14;
+            --darker-bg: #050509;
+            --light-bg: #f5f5f7;
+            --lighter-bg: #ffffff;
+            --light-text: #333333;
+            --light-border: #e0e0e0;
+            --cyber-gradient: linear-gradient(135deg, #00f3ff 0%, #b967ff 50%, #ff003c 100%);
+            
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--darker-bg);
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --border-color: rgba(0, 243, 255, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        .light-theme {
+            --bg-primary: var(--light-bg);
+            --bg-secondary: var(--lighter-bg);
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-bg: rgba(0, 0, 0, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-family: 'Rajdhani', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cyber-text {
+            color: var(--neon-blue);
+        }
+
+        /* Header стили как в основном файле */
+        header {
+            padding: 15px 0;
+            background: var(--bg-secondary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-red);
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--card-bg);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-switcher i {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+        }
+
+        /* Стили для страницы "О нас" */
+        .about-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .about-hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .about-content {
+            padding: 80px 0;
+        }
+
+        .about-section {
+            margin-bottom: 60px;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            margin-bottom: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 2px solid var(--neon-purple);
+        }
+
+        .team-member h4 {
+            color: var(--neon-purple);
+            margin: 1rem 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            border: 2px solid var(--neon-yellow);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: var(--neon-yellow);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 4rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-links {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--neon-blue);
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-red);
+        }
+
+         .nav-links a.active {
+    color: var(--neon-red) !important;
+    border-bottom: 2px solid var(--neon-red);
+    padding-bottom: 5px;
+}
+
+/* Для кибер-эффекта активной ссылки */
+.nav-links a.active::after {
+    content: ' ▸';
+    color: var(--neon-red);
+}
+
+.nav-links a.active::before {
+    content: '◂ ';
+    color: var(--neon-red);
+}
+
+
+
+
+
+
+
+
+
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-moon"></i>
+    </div>
+<!-- Шапка -->
+<header>
+    <nav class="container">
+        <h1 class="logo cyber-text">CyberKombat</h1>
+        <ul class="nav-links">
+            <!-- Ссылки на все страницы -->
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html" class="active">О нас</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <!-- Ссылки на разделы главной страницы -->
+            <li><a href="index.html#products">Системы</a></li>
+            <li><a href="index.html#gallery">Галерея</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <section class="about-hero">
+        <div class="container">
+            <h1 class="cyber-text">О КОМПАНИИ</h1>
+            <p>Создаем будущее игровых технологий с 2020 года</p>
+        </div>
+    </section>
+
+    <section class="about-content">
+        <div class="container">
+            <div class="about-section">
+                <h2>НАША МИССИЯ</h2>
+                <div class="about-card">
+                    <p>Мы верим, что каждый геймер заслуживает лучшего. CyberKombat — это не просто компьютеры, это инструменты для победы. Мы создаем системы, которые раскрывают ваш потенциал и дают преимущество в любом киберспортивном соревновании.</p>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>НАША КОМАНДА</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <i class="fas fa-user-secret" style="font-size: 3rem; color: var(--neon-purple);"></i>
+                        <h4>МАКСИМ "CYBER" ИВАНОВ</h4>
+                        <p>Главный инженер</p>
+                        <p>15 лет опыта в кастомных сборках</p>
+                    </div>
+                    <div class="team-member">
+                        <i class="fas fa-code" style="font-size: 3rem; color: var(--neon-purple);"></i>
+                        <h4>АННА "NEO" СМИРНОВА</h4>
+                        <p>Lead Developer</p>
+                        <p>Специалист по оптимизации систем</p>
+                    </div>
+                    <div class="team-member">
+                        <i class="fas fa-gamepad" style="font-size: 3rem; color: var(--neon-purple);"></i>
+                        <h4>ДМИТРИЙ "FROST" ПЕТРОВ</h4>
+                        <p>Киберспортсмен-консультант</p>
+                        <p>Профессиональный геймер</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>НАШИ ДОСТИЖЕНИЯ</h2>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <p>собранных систем</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <p>киберспортивных команд</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <p>техническая поддержка</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99%</div>
+                        <p>довольных клиентов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2 class="logo cyber-text" style="font-size: 2.5rem;">CyberKombat</h2>
+            <p>Создаем будущее игровых технологий</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+            
+            <p style="margin-top: 2rem; color: var(--text-secondary);">© 2024 CYBERKOMBAT. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const body = document.body;
+        
+        themeSwitcher.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            const icon = themeSwitcher.querySelector('i');
+            if (body.classList.contains('light-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
